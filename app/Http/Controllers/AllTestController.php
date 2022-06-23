@@ -23,6 +23,7 @@ class AlltestController extends Controller
             $alltest->school = $request->input('school');
             $alltest->date = $request->input('date');
             $alltest->question = $request->input('question');
+            $alltest->time = $request->input('time');
             $alltest->save();
             Test::Where('test_id', $alltest->test_id)->increment('quantity_exam', 1);
             return $alltest;
@@ -40,6 +41,7 @@ class AlltestController extends Controller
             $alltest->school = $request->input('school');
             $alltest->date = $request->input('date');
             $alltest->question = $request->input('question');
+            $alltest->time = $request->input('time');
             $alltest->save();
             return $alltest;
         }

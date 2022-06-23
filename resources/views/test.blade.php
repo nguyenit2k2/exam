@@ -21,10 +21,8 @@
         </style>
     </head>
     <body class="antialiased">
-        <h1>form</h1>
-        <form action="{{url('/add-answer/1')}}" method="post">
-        @csrf
-        <input type="text" name="answer"><br><br>
-        </form>
+        @if(($answer = Session::get('Answer') ) != null)
+
+        @endif
     </body>
 </html>
