@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class AlltestController extends Controller
 {
-    public function show_alltest($id=null){
+    public function showAllTest($id=null){
         if($id == null){
         return AllTest::orderBy('test_id')->get();
     }
@@ -14,7 +14,7 @@ class AlltestController extends Controller
             return AllTest::where('test_id', $id)->get();
         }
 }
-    public function add_alltest(Request $request){
+    public function addAllTest(Request $request){
         try{
             $alltest = new AllTest();
             $alltest->exam_id = $request->input('exam_id');
@@ -32,7 +32,7 @@ class AlltestController extends Controller
             return $err->getMessage();
         }
 }       
-    public function update_alltest(Request $request , $id){
+    public function updateAllTest(Request $request , $id){
         try{
             $alltest = AllTest::Where('id', $id)->first();
             $alltest->exam_id = $request->input('exam_id');
@@ -49,7 +49,7 @@ class AlltestController extends Controller
             return $err->getMessage();
         }
     }       
-    public function delete_alltest($id){
+    public function deleteAllTest($id){
         try{
             $alltest = AllTest::Where('id', $id)->first();
             $alltest->delete();

@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
-    public function show_test($id=null){
+    public function showTest($id=null){
         if($id == null){
         return Test::orderBy('test_id')->get();
     }
@@ -13,7 +13,7 @@ class TestController extends Controller
             return Test::where('test_id', $id)->get();
         }
 }   
-    public function add_test(Request $request){
+    public function addTest(Request $request){
         try{
             $test = new Test();
             $test->exam_id = $request->input('exam_id');
@@ -27,7 +27,7 @@ class TestController extends Controller
             return $err->getMessage();
         }
     }       
-    public function update_test(Request $request , $id){
+    public function updateTest(Request $request , $id){
         try{
             $test = Test::Where('test_id', $id)->first();
             $test->exam_id = $request->input('exam_id');
@@ -41,7 +41,7 @@ class TestController extends Controller
             return $err->getMessage();
         }
     }       
-    public function delete_test($id){
+    public function deleteTest($id){
         try{
             $test = Test::Where('test_id', $id)->first();
             $test->delete();

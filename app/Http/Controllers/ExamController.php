@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
-    public function show_exam($id=null){
+    public function showExam($id=null){
         if($id == null){
         return Exam::orderBy('exam_id')->get();
     }
@@ -13,7 +13,7 @@ class ExamController extends Controller
             return Exam::where('exam_id', $id)->get();
         }
 }
-    public function add_exam(Request $request){
+    public function addExam(Request $request){
         try{
             $exam = new Exam();
             $exam->name = $request->input('name');
@@ -25,7 +25,7 @@ class ExamController extends Controller
             return $err->getMessage();
         }
 }       
-    public function update_exam(Request $request , $id){
+    public function updateExam(Request $request , $id){
         try{
             $exam = Exam::Where('exam_id', $id)->first();
             $exam->name = $request->input('name');
@@ -37,7 +37,7 @@ class ExamController extends Controller
             return $err->getMessage();
         }
     }       
-    public function delete_exam($id){
+    public function deleteExam($id){
         try{
             $exam = Exam::Where('exam_id', $id)->first();
             $exam->delete();

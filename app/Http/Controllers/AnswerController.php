@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Cookie;
 
 class AnswerController extends Controller
 {
-    public function show_answer($id=null){
+    public function showAnswer($id=null){
         if($id===null){
             $answer = Answer::orderBy('id', 'asc')->get();
         }
@@ -21,7 +21,7 @@ class AnswerController extends Controller
         }
         return $answer;
     }
-    public function add_answer($id, Request $request) {
+    public function addAnswer($id, Request $request) {
         $question = Question::where('question_id', $id)->first();
         // $hocsinh_id = Session::get('customer_id');
         $hocsinh_id = $request->Cookie("customer_id");
@@ -39,13 +39,13 @@ class AnswerController extends Controller
         return "Vui lòng đăng nhập";
     }
 }   
-    public function update_answer($id, Request $request) {
+    public function updateAnswer($id, Request $request) {
         $answer = Answer::Where('id', $id)->first();
         $answer->dapan = $request->input('answer');
         $answer->save();
         return $answer;
     }
-    public function delete_answer($id) {
+    public function deleteAnswer($id) {
         $answer = Answer::Where('id', $id)->first();
         if($answer){
             $answer->delete();
@@ -80,7 +80,7 @@ class AnswerController extends Controller
             return "Bai thi da nop, ban co the lam lai" ; 
         }
     }
-    public function do_exercise($dethi_id,Request $request){
+    public function doExercise($dethi_id,Request $request){
         $hocsinh_id = $request->Cookie("customer_id");
         $task = Task::where('hocsinh_id', $hocsinh_id)->where('dethi_id', $dethi_id)->first();
         if($task){

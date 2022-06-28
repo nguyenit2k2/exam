@@ -18,44 +18,45 @@ use App\Http\Controllers\CustomerController;
 |
 */
 //exam
-Route::get('/exam/{id?}', [ExamController::class, 'show_exam']);
-Route::post('/add-exam',[ExamController::class, 'add_exam']);
-Route::put('/update-exam/{id}',[ExamController::class, 'update_exam']);
-Route::delete('/delete-exam/{id}',[ExamController::class, 'delete_exam']);
+Route::get('/exam/{id?}', [ExamController::class, 'showExam']);
+Route::post('/add-exam',[ExamController::class, 'addExam']);
+Route::put('/update-exam/{id}',[ExamController::class, 'updateExam']);
+Route::delete('/delete-exam/{id}',[ExamController::class, 'deleteExam']);
 
 
 //test
-Route::get('/test/{id}', [TestController::class, 'show_test']);
-Route::post('/add-test',[TestController::class, 'add_test']);
-Route::put('/update-test/{id}',[TestController::class, 'update_test']);
-Route::delete('/delete-test/{id}',[TestController::class, 'delete_test']);
+Route::get('/test/{id}', [TestController::class, 'showTest']);
+Route::post('/add-test',[TestController::class, 'addTest']);
+Route::put('/update-test/{id}',[TestController::class, 'updateTest']);
+Route::delete('/delete-test/{id}',[TestController::class, 'deleteTest']);
 
 //all test
 
-Route::get('/alltest/{id?}', [AllTestController::class, 'show_alltest']);
-Route::post('/add-alltest',[AllTestController::class, 'add_alltest']);
-Route::put('/update-alltest/{id}',[AllTestController::class, 'update_alltest']);
-Route::delete('/delete-alltest/{id}',[AllTestController::class, 'delete_alltest']);
+Route::get('/alltest/{id?}', [AllTestController::class, 'showAllTest']);
+Route::post('/add-alltest',[AllTestController::class, 'addAllTest']);
+Route::put('/update-alltest/{id}',[AllTestController::class, 'updateAllTest']);
+Route::delete('/delete-alltest/{id}',[AllTestController::class, 'deleteAllTest']);
 
 //QuestionController
 
-Route::get('/question/{id}', [QuestionController::class, 'show_question']);
-Route::post('/add-question/{id}', [QuestionController::class, 'add_question']);
-
+Route::get('/question/{id}', [QuestionController::class, 'showQuestion']);
+Route::post('/add-question/{id}', [QuestionController::class, 'addQuestion']);
+Route::put('/update-question/{id}', [QuestionController::class, 'updateQuestion']);
+Route::delete('/delete  -question/{id}', [QuestionController::class, 'deleteQuestion']);
 
 //CustomerController
 
 Route::post('login', [CustomerController::class,'login']);
-Route::get('logout', [CustomerController::class,'logout']);
+Route::post('logout', [CustomerController::class,'logout']);
 Route::post('register', [CustomerController::class,'register']);
 
-Route::get('test', [CustomerController::class, 'test']);
+// Route::get('test', [CustomerController::class, 'test']);
 
 
-Route::get('answer/{id?}', [AnswerController::class, 'show_answer']);
-Route::post('add-answer/{id}', [AnswerController::class, 'add_answer']);
-Route::put('update-answer/{id}', [AnswerController::class, 'update_answer']);
-Route::delete('delete-answer/{id}', [AnswerController::class, 'delete_answer']);
+Route::get('answer/{id?}', [AnswerController::class, 'showAnswer']);
+Route::post('add-answer/{id}', [AnswerController::class, 'addAnswer']);
+Route::put('update-answer/{id}', [AnswerController::class, 'updateAnswer']);
+Route::delete('delete-answer/{id}', [AnswerController::class, 'deleteAnswer']);
 
 Route::get('submit/{id}',[AnswerController::class, 'submit']);
-Route::get('do-exercise/{id}',[AnswerController::class, 'do_exercise']);
+Route::get('do-exercise/{id}',[AnswerController::class, 'doExercise']);

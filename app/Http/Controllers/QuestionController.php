@@ -7,11 +7,11 @@ use Session;
 use App\Models\Answer;
 class QuestionController extends Controller
 {
-    public function show_question($id){
+    public function showQuestion($id){
         $question = Question::where('alltest_id', $id)->orderBy('question_id','asc')->get();
         return $question;
     }
-    public function add_question($id, Request $request){
+    public function addQuestion($id, Request $request){
         $test = AllTest::where('id', $id)->first()->question;
         $question = new Question();
         $question->alltest_id = $request->input('alltest_id');
@@ -24,7 +24,7 @@ class QuestionController extends Controller
         $question->save();
         return $question;
     }
-    public function update_question($id, Request $request){
+    public function updateQuestion($id, Request $request){
         $question = Question::where('question_id', $id)->first();
         $question->alltest_id = $request->input('alltest_id');
         $question->question = $request->input('question');
@@ -36,7 +36,7 @@ class QuestionController extends Controller
         $question->save();
         return $question;
     }
-    public function delete_question($id, Request $request) {
+    public function deleteQuestion($id, Request $request) {
         $question = Question::where('question_id', $id)->first();
         $question->delete();
         $question = Question::orderBy('question_id', 'asc')->get();
