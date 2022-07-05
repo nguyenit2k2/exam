@@ -9,7 +9,6 @@ use App\Models\Task;
 use App\Models\Question;
 use Illuminate\Support\Facades\Cookie;
 
-
 class AnswerController extends Controller
 {
     public function showAnswer($id=null){
@@ -21,46 +20,99 @@ class AnswerController extends Controller
         }
         return $answer;
     }
-    public function addAnswer($id, Request $request) {
-        $question = Question::where('question_id', $id)->first();
-        // $hocsinh_id = Session::get('customer_id');
+    public function addAnswer(Request $request,$dethi_id) {
         $hocsinh_id = $request->Cookie("customer_id");
-        if ($hocsinh_id){
-        if($question){
-        $answer = new Answer();
-        $answer->hocsinh_id = $hocsinh_id;
-        $answer->cauhoi_id = $id;
-        $answer->dapan = $request->input('answer');
-        $answer->dethi_id = $request->input('test_id');
-        $answer->save();
+        $list_answer = $request->input('list_answer');   
+        if($hocsinh_id){
+        $check = Answer::where('hocsinh_id', $hocsinh_id)->where('dethi_id',$dethi_id)->get();
+        if($check){
+            foreach($list_answer as $list_answer) {
+                $answer = Answer::Where('cauhoi_id', $list_answer['question_id'])->where('hocsinh_id',$hocsinh_id)->first();
+                $answer->hocsinh_id = $hocsinh_id;
+                $answer->dethi_id = $dethi_id;
+                $answer->cauhoi_id = $list_answer['question_id'];
+                $answer->dapan = $list_answer['answer'];
+                $answer->save();
+            }
+        }
+        else{
+        foreach($list_answer as $list_answer) {
+            $answer = new Answer();
+            $answer->hocsinh_id = $hocsinh_id;
+            $answer->dethi_id = $dethi_id;
+            $answer->cauhoi_id = $list_answer['question_id'];
+            $answer->dapan = $list_answer['answer'];
+            $answer->save();
+        }
+    }
         return $answer;
     }
-    }else{
-        return "Vui lòng đăng nhập";
-    }
+        else{
+            return "Đăng nhập để thi";
+        }
 }   
     public function updateAnswer($id, Request $request) {
+        $hocsinh_id = $request->Cookie("customer_id");
+        if ($hocsinh_id){
         $answer = Answer::Where('id', $id)->first();
         $answer->dapan = $request->input('answer');
         $answer->save();
         return $answer;
+        }
+        else{
+            return "Vui lòng đăng nhập";
+        }
     }
     public function deleteAnswer($id) {
+        $hocsinh_id = $request->Cookie("customer_id");
+        if ($hocsinh_id){
         $answer = Answer::Where('id', $id)->first();
         if($answer){
             $answer->delete();
         }
         $answer = Answer::orderBy('id', 'asc')->get();
-    }
+        return "Xóa câu trả lời thành công";
+        }
+        else{
+            return "Vui lòng đăng nhập";
+        }
+    } 
     public function submit(Request $request,$dethi_id){
+        // add or update answer to table
         $hocsinh_id = $request->Cookie("customer_id");
+        $list_answer = $request->input('list_answer');   
+        if($hocsinh_id){
+        $check = Task::where('hocsinh_id', $hocsinh_id)->where('dethi_id',$dethi_id)->get();
+        if(empty($check)){
+            foreach($list_answer as $list_answer) {
+                $answer = Answer::Where('cauhoi_id', $list_answer['question_id'])->where('hocsinh_id',$hocsinh_id)->first();
+                $answer->hocsinh_id = $hocsinh_id;
+                $answer->dethi_id = $dethi_id;
+                $answer->cauhoi_id = $list_answer['question_id'];
+                $answer->dapan = $list_answer['answer'];
+                $answer->save();
+                
+            }
+        }
+        else{
+        foreach($list_answer as $list_answer) {
+            $answer = new Answer();
+            $answer->hocsinh_id = $hocsinh_id;
+            $answer->dethi_id = $dethi_id;
+            $answer->cauhoi_id = $list_answer['question_id'];
+            $answer->dapan = $list_answer['answer'];
+            $answer->save();
+        }
+    }
+
+        //caculator mark and create or update result
         $answer = Answer::where('hocsinh_id', $hocsinh_id)->where('dethi_id', $dethi_id)->get();
         $quantityquestion = AllTest::where('id', $dethi_id)->first()->question;
         $mark = 0;
         $markofone = 10 / $quantityquestion;
-        foreach($answer as $answer) {
-            $question_id = $answer->cauhoi_id ;
-            $yourAnswer = $answer->dapan;
+        foreach($answer as $answers) {
+            $question_id = $answers->cauhoi_id ;
+            $yourAnswer = $answers->dapan;
             $answer = Question::where('question_id', $question_id)->first()->answer;
             if($answer == $yourAnswer){
                 $mark= $mark + $markofone;
@@ -77,18 +129,19 @@ class AnswerController extends Controller
         return $task;
     }
         else{
-            return "Bai thi da nop, ban co the lam lai" ; 
+            $task->diemso = $mark;
+            $task->save();
+            return $task;
         }
     }
+    else{
+        return "Đăng nhập để làm bài";
+    }
+}
     public function doExercise($dethi_id,Request $request){
         $hocsinh_id = $request->Cookie("customer_id");
         $task = Task::where('hocsinh_id', $hocsinh_id)->where('dethi_id', $dethi_id)->first();
         if($task){
-            $answer = Answer::where('hocsinh_id', $hocsinh_id)->where('dethi_id', $dethi_id)->get();
-            foreach($answer as $answer){
-            $answer->delete();
-            }
-            $task->delete();
             return "Lam lai bai thi";
         }else{
             return "Bắt đầu bài thi";

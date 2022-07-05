@@ -7,6 +7,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -40,7 +41,7 @@ Route::delete('/delete-alltest/{id}',[AllTestController::class, 'deleteAllTest']
 //QuestionController
 
 Route::get('/question/{id}', [QuestionController::class, 'showQuestion']);
-Route::post('/add-question/{id}', [QuestionController::class, 'addQuestion']);
+Route::post('/add-question', [QuestionController::class, 'addQuestion']);
 Route::put('/update-question/{id}', [QuestionController::class, 'updateQuestion']);
 Route::delete('/delete  -question/{id}', [QuestionController::class, 'deleteQuestion']);
 
@@ -50,6 +51,8 @@ Route::post('login', [CustomerController::class,'login']);
 Route::post('logout', [CustomerController::class,'logout']);
 Route::post('register', [CustomerController::class,'register']);
 
+
+
 // Route::get('test', [CustomerController::class, 'test']);
 
 
@@ -58,5 +61,10 @@ Route::post('add-answer/{id}', [AnswerController::class, 'addAnswer']);
 Route::put('update-answer/{id}', [AnswerController::class, 'updateAnswer']);
 Route::delete('delete-answer/{id}', [AnswerController::class, 'deleteAnswer']);
 
-Route::get('submit/{id}',[AnswerController::class, 'submit']);
+Route::post('submit/{id}',[AnswerController::class, 'submit']);
 Route::get('do-exercise/{id}',[AnswerController::class, 'doExercise']);
+
+//AdminController
+Route::post('add-user', [AdminController::class,'addUser']);
+Route::put('edit-author/{id}', [AdminController::class, 'editAuthor']);
+Route::delete('delete-user', [AdminController::class, 'deleteUser']);
